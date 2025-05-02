@@ -11,6 +11,7 @@ import (
 const PROMPT = ">>"
 
 func Start(in io.Reader, out io.Writer) {
+	fmt.Fprintf(out, "Press ^D or type '.exit' to exit the REPL\n")
 	scanner := bufio.NewScanner(in)
 
 	for {
@@ -21,6 +22,9 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+		if line == ".exit" {
+			return
+		}
 		l := lexer.New(line)
 
 		for tok := l.NextToken(); tok.Type != token.EOF; tok = l.NextToken() {

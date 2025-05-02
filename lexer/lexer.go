@@ -9,6 +9,7 @@ type Lexer struct {
 	position     int  // current position in input (points to current char)
 	readPosition int  // current reading position in input (after current char)
 	ch           byte // current char under examination”
+	// todo: use rune instead of u8
 }
 
 func New(input string) *Lexer {
@@ -110,11 +111,12 @@ func (l *Lexer) readIdentifier() string {
 }
 
 func isLetter(ch byte) bool {
+	// TODO: add "?" as a valid identifier name
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
 }
 
 func isDigit(ch byte) bool {
-	return '0' <= ch && ch <= '9'
+	return '0' <= ch && ch <= '9' || ch == '_'
 }
 
 func (l *Lexer) skipWhitespace() {
